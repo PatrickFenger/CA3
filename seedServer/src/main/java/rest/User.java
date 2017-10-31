@@ -27,12 +27,13 @@ public class User {
     @PUT
     @Consumes(MediaType.APPLICATION_JSON)
     @Produces(MediaType.APPLICATION_JSON)
-    public String editUser(String json) {
+    public Response editUser(String json) {
         entity.User user = gson.fromJson(json, entity.User.class);
         try {
-            return gson.toJson(facade.editUser(user));
+            String responseJson = gson.toJson(facade.editUser(user));
+            return Response.ok(responseJson,MediaType.APPLICATION_JSON).build();
         } catch (EntityNotFoundException e) {
-            return "{404}";
+            return getErrorResponse(new ErrorMessage(e));
         }
     }
 
@@ -44,7 +45,7 @@ public class User {
             facade.deleteUser(username);
             return Response.status(200).build();
         } catch (EntityNotFoundException e) {
-            return Response.status(404).build();
+            return getErrorResponse(new ErrorMessage(e));
         }
     }
 
@@ -54,12 +55,16 @@ public class User {
     public Response getUser(@PathParam("username") String username) {
         entity.User user = facade.getUserByUserId(username);
         if (user == null) {
-            return Response.status(404)
-                    .entity(new ErrorMessage(404,"User "+username+" not found!"))
-                    .type(MediaType.APPLICATION_JSON)
-                    .build();
+            return getErrorResponse(new ErrorMessage(404, "User " + username + " not found!"));
         }
         String json = gson.toJson(user);
         return Response.ok(json,MediaType.APPLICATION_JSON).build();
+    }
+
+    private Response getErrorResponse(ErrorMessage errorMessage) {
+        return Response.status(404)
+                .entity(errorMessage)
+                .type(MediaType.APPLICATION_JSON)
+                .build();
     }
 }
