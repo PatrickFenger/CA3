@@ -2,6 +2,8 @@ package rest;
 
 import com.google.gson.Gson;
 import facades.UserFacade;
+import rest.utilities.EnhancedGSONBuilder;
+import rest.utilities.ErrorMessage;
 import security.IUserFacade;
 
 import javax.persistence.EntityManagerFactory;
@@ -44,5 +46,20 @@ public class User {
         } catch (EntityNotFoundException e) {
             return Response.status(404).build();
         }
+    }
+
+    @GET
+    @Path("{username}")
+    @Produces(MediaType.APPLICATION_JSON)
+    public Response getUser(@PathParam("username") String username) {
+        entity.User user = facade.getUserByUserId(username);
+        if (user == null) {
+            return Response.status(404)
+                    .entity(new ErrorMessage(404,"User "+username+" not found!"))
+                    .type(MediaType.APPLICATION_JSON)
+                    .build();
+        }
+        String json = gson.toJson(user);
+        return Response.ok(json,MediaType.APPLICATION_JSON).build();
     }
 }

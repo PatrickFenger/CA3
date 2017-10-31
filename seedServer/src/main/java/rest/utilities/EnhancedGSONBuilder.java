@@ -1,4 +1,4 @@
-package rest;
+package rest.utilities;
 
 import com.google.gson.ExclusionStrategy;
 import com.google.gson.FieldAttributes;
