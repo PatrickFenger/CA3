@@ -46,9 +46,9 @@ public class UserFacade implements IUserFacade {
     @Override
     public User editUser(User user) {
         EntityManager em = getEntityManager();
-        User editPerson = em.find(User.class, user.getId());
+        User editPerson = em.find(User.class, user.getUserName());
         if (editPerson == null) {
-            throw new EntityNotFoundException("User with id " + user.getId() + " not found!");
+            throw new EntityNotFoundException("User " + user.getUserName() + " not found!");
         }
         em.getTransaction().begin();
         em.merge(user);
@@ -62,7 +62,7 @@ public class UserFacade implements IUserFacade {
         List<User> users;
         try {
             em.getTransaction().begin();
-            users = em.createQuery("SELECT u FROM SEED_USER u").getResultList();
+            users = em.createQuery("SELECT u FROM User u").getResultList();
             em.getTransaction().commit();
             return users;
         } finally {

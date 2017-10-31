@@ -11,16 +11,15 @@ import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
-@Entity(name = "SEED_USER")
+@Entity
 public class User implements IUser, Serializable {
-
-    @Id
-    private int id;
     @ManyToMany
     List<Role> roles = new ArrayList<>();
+
     @NotNull
     private String passwordHash;
-    @NotNull
+
+    @Id
     private String userName;
 
     public User() {
@@ -29,14 +28,6 @@ public class User implements IUser, Serializable {
     public User(String userName, String password) throws PasswordStorage.CannotPerformOperationException {
         this.userName = userName;
         this.passwordHash = PasswordStorage.createHash(password);
-    }
-
-    public int getId() {
-        return id;
-    }
-
-    public void setId(int id) {
-        this.id = id;
     }
 
     @Override
