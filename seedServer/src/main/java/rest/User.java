@@ -5,12 +5,11 @@ import facades.UserFacade;
 import security.IUserFacade;
 
 import javax.persistence.EntityManagerFactory;
+import javax.persistence.EntityNotFoundException;
 import javax.persistence.Persistence;
-import javax.ws.rs.Consumes;
-import javax.ws.rs.PUT;
-import javax.ws.rs.Path;
-import javax.ws.rs.Produces;
+import javax.ws.rs.*;
 import javax.ws.rs.core.MediaType;
+import javax.ws.rs.core.Response;
 
 @Path("user")
 public class User {
@@ -30,5 +29,17 @@ public class User {
         entity.User user = gson.fromJson(json, entity.User.class);
         facade.editUser(user);
         return gson.toJson(user);
+    }
+
+    @DELETE
+    @Path("{username}")
+    @Produces(MediaType.APPLICATION_JSON)
+    public Response deleteUser(@PathParam("username") String username) {
+        try {
+            facade.deleteUser(username);
+            return Response.status(200).build();
+        } catch (EntityNotFoundException e) {
+            return Response.status(404).build();
+        }
     }
 }
