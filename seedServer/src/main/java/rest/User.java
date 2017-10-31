@@ -38,7 +38,7 @@ public class User {
     }
 
     private Response getErrorResponse(ErrorMessage errorMessage) {
-        return Response.status(404)
+        return Response.status(errorMessage.getStatus())
                 .entity(errorMessage)
                 .type(MediaType.APPLICATION_JSON)
                 .build();
