@@ -27,7 +27,11 @@ public class User {
     @Produces(MediaType.APPLICATION_JSON)
     public String editUser(String json) {
         entity.User user = gson.fromJson(json, entity.User.class);
-        return gson.toJson(facade.editUser(user));
+        try {
+            return gson.toJson(facade.editUser(user));
+        } catch (EntityNotFoundException e) {
+            return "{404}";
+        }
     }
 
     @DELETE

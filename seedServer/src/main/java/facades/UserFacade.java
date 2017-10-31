@@ -51,9 +51,9 @@ public class UserFacade implements IUserFacade {
             throw new EntityNotFoundException("User " + user.getUserName() + " not found!");
         }
         em.getTransaction().begin();
-        em.merge(editUser);
+        em.merge(user);
         em.getTransaction().commit();
-        return editUser;
+        return user;
     }
 
 

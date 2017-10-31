@@ -10,7 +10,7 @@ import java.util.List;
 @Entity
 public class Role implements Serializable {
 
-  @ManyToMany(mappedBy = "roles")
+  @ManyToMany
   private List<User> users;
 
   private static final long serialVersionUID = 1L;

@@ -13,7 +13,7 @@ import java.util.List;
 
 @Entity
 public class User implements IUser, Serializable {
-    @ManyToMany
+    @ManyToMany(mappedBy = "users")
     List<Role> roles = new ArrayList<>();
 
     @NotNull
