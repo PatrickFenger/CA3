@@ -17,7 +17,7 @@ public class User {
     IUserFacade facade;
 
     public User() {
-        this.gson = new Gson();
+        this.gson = new EnhancedGSONBuilder().excludeFiledNames("users").buildGSON();
         EntityManagerFactory emf = Persistence.createEntityManagerFactory("pu_development");
         facade = new UserFacade(emf);
     }
@@ -27,8 +27,7 @@ public class User {
     @Produces(MediaType.APPLICATION_JSON)
     public String editUser(String json) {
         entity.User user = gson.fromJson(json, entity.User.class);
-        facade.editUser(user);
-        return gson.toJson(user);
+        return gson.toJson(facade.editUser(user));
     }
 
     @DELETE

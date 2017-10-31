@@ -25,7 +25,7 @@ public class UserFacade implements IUserFacade {
     }
 
     @Override
-    public IUser getUserByUserId(String id) {
+    public User getUserByUserId(String id) {
         EntityManager em = getEntityManager();
         return em.find(User.class, id);
     }
@@ -51,9 +51,9 @@ public class UserFacade implements IUserFacade {
             throw new EntityNotFoundException("User " + user.getUserName() + " not found!");
         }
         em.getTransaction().begin();
-        em.merge(user);
+        em.merge(editUser);
         em.getTransaction().commit();
-        return user;
+        return editUser;
     }
 
 
@@ -82,5 +82,4 @@ public class UserFacade implements IUserFacade {
             throw new NotAuthorizedException("Invalid username or password", Response.Status.FORBIDDEN);
         }
     }
-
 }
