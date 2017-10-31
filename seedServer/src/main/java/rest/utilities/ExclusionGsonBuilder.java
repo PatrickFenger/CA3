@@ -12,16 +12,16 @@ import java.util.List;
 /**
  * Created by adam on 9/14/2017.
  */
-public class EnhancedGSONBuilder {
+public class ExclusionGsonBuilder {
     private List<String> fieldNames;
     private List<Class<?>> classes;
 
-    public EnhancedGSONBuilder excludeFiledNames(String ...fieldNames) {
+    public ExclusionGsonBuilder excludeFieldNames(String ...fieldNames) {
         this.fieldNames = new ArrayList<>(Arrays.asList(fieldNames));
         return this;
     }
 
-    public EnhancedGSONBuilder excludeClasses(Class<?> ...classes) {
+    public ExclusionGsonBuilder excludeClasses(Class<?> ...classes) {
         this.classes = new ArrayList<>(Arrays.asList(classes));
         return this;
     }
@@ -40,7 +40,7 @@ public class EnhancedGSONBuilder {
         };
     }
 
-    public Gson buildGSON() {
+    public Gson buildGson() {
         GsonBuilder gsonBuilder = new GsonBuilder();
         ExclusionStrategy exclusionStrategy = buildExclusionStrategy();
         gsonBuilder.setExclusionStrategies(exclusionStrategy);

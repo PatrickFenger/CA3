@@ -2,7 +2,7 @@ package rest;
 
 import com.google.gson.Gson;
 import facades.UserFacade;
-import rest.utilities.EnhancedGSONBuilder;
+import rest.utilities.ExclusionGsonBuilder;
 import rest.utilities.ErrorMessage;
 import security.IUserFacade;
 
@@ -19,7 +19,7 @@ public class User {
     IUserFacade facade;
 
     public User() {
-        this.gson = new EnhancedGSONBuilder().excludeFiledNames("users","passwordHash").buildGSON();
+        this.gson = new ExclusionGsonBuilder().excludeFieldNames("users","passwordHash").buildGson();
         EntityManagerFactory emf = Persistence.createEntityManagerFactory("pu_development");
         facade = new UserFacade(emf);
     }
