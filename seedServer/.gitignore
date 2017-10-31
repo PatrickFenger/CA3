@@ -17,3 +17,5 @@ derby.log
 
 
 nb-configuration.xml
+.idea/
+seedMaven.iml
