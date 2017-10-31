@@ -117,6 +117,36 @@ class AuthenticationHandler {
       })
     return;
   }
+
+  register = (username, password, cb) => {
+    this._errorMessage = "";
+    var user = { username, password };
+
+    var options = {
+      method: "POST",
+      body: JSON.stringify(user),
+      headers: new Headers({
+        'Content-Type': 'application/json'
+      })
+    }
+    let resFromFirstPromise=null;  //Pass on response the "second" promise so we can read errors from server
+    fetch(URL + "api/register", options)
+      .then(res => {
+        resFromFirstPromise = res;
+        return res.json();
+      })
+      .then(data => {
+        errorChecker(resFromFirstPromise, data);        
+      })
+      .catch(err => {
+        console.log(err);
+        if (cb) {
+          cb({ errorMessage: fetchHelper.addJustErrorMessage(err) });
+        }
+      })
+    return;
+  }
+
 }
 
 var auth = new AuthenticationHandler();
