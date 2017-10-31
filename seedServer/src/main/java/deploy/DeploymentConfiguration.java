@@ -50,7 +50,7 @@ public class DeploymentConfiguration implements ServletContextListener {
  
     boolean makeTestUser = context.getInitParameter("makeTestUser").toLowerCase().equals("true");
     if (makeTestUser) {
-      EntityManager em = Persistence.createEntityManagerFactory("CA3").createEntityManager();
+      EntityManager em = Persistence.createEntityManagerFactory(PU_NAME).createEntityManager();
       try {
         System.out.println("Creating TEST Users");
         if (em.find(User.class, "user") == null) {

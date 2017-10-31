@@ -49,7 +49,7 @@ public class UserFacade implements IUserFacade {
       }
   }
   
-  public void setUser(String username, String password) throws PasswordStorage.CannotPerformOperationException{
+  public void registerUser(String username, String password) throws PasswordStorage.CannotPerformOperationException{
       EntityManager em = getEntityManager();
       try {
           em.getTransaction().begin();
@@ -58,7 +58,6 @@ public class UserFacade implements IUserFacade {
           user.addRole(userRole);   
           em.persist(user);         
           em.getTransaction().commit();
-          System.out.println("Created New user");
       }
       finally {
           em.close();

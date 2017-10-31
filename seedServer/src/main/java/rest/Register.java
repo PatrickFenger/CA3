@@ -3,17 +3,14 @@ package rest;
 import com.google.gson.Gson;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
-import com.nimbusds.jose.JOSEException;
 import facades.UserFacade;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.Persistence;
 import javax.ws.rs.Consumes;
 import javax.ws.rs.Produces;
-import javax.ws.rs.GET;
 import javax.ws.rs.POST;
 import javax.ws.rs.Path;
 import javax.ws.rs.core.MediaType;
-import javax.ws.rs.core.Response;
 import security.PasswordStorage;
 
 @Path("register")
@@ -23,12 +20,6 @@ public class Register {
 
     public Register() {
         gson = new Gson();
-    }
-
-    @GET
-    @Produces(MediaType.APPLICATION_JSON)
-    public String getSomething() {
-        return "{\"message\" : \"Please register)\"}";
     }
 
     @POST
@@ -41,7 +32,7 @@ public class Register {
         
         EntityManagerFactory emf = Persistence.createEntityManagerFactory("CA3");
         UserFacade uf = new UserFacade(emf);
-        uf.setUser(username, password);
+        uf.registerUser(username, password);
         return gson.toJson(username);
         
 
