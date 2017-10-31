@@ -1,23 +1,21 @@
 package entity;
 
-import java.io.Serializable;
-import java.util.ArrayList;
-import java.util.List;
-import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.ManyToMany;
+import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.List;
 
-@Entity(name = "USER_ROLE")
+@Entity
 public class Role implements Serializable {
 
-  @ManyToMany(mappedBy = "roles")
+  @ManyToMany
   private List<User> users;
 
   private static final long serialVersionUID = 1L;
   
   @Id
-  @Column(length = 30, name = "ROLE_NAME")
   private String roleName ;
 
   public Role(String roleName) {
