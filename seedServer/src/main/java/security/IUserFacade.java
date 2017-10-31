@@ -15,6 +15,7 @@ public interface IUserFacade {
      */
     List<String> authenticateUser(String userName, String password);
     User getUserByUserId(String id);
+    List<User> getUsers();
     User deleteUser(String id);
     User editUser(User user);
 

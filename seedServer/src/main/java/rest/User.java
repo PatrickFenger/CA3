@@ -19,7 +19,7 @@ public class User {
     IUserFacade facade;
 
     public User() {
-        this.gson = new EnhancedGSONBuilder().excludeFiledNames("users").buildGSON();
+        this.gson = new EnhancedGSONBuilder().excludeFiledNames("users","passwordHash").buildGSON();
         EntityManagerFactory emf = Persistence.createEntityManagerFactory("pu_development");
         facade = new UserFacade(emf);
     }
@@ -31,10 +31,17 @@ public class User {
         entity.User user = gson.fromJson(json, entity.User.class);
         try {
             String responseJson = gson.toJson(facade.editUser(user));
-            return Response.ok(responseJson,MediaType.APPLICATION_JSON).build();
+            return Response.ok(responseJson, MediaType.APPLICATION_JSON).build();
         } catch (EntityNotFoundException e) {
             return getErrorResponse(new ErrorMessage(e));
         }
+    }
+
+    private Response getErrorResponse(ErrorMessage errorMessage) {
+        return Response.status(404)
+                .entity(errorMessage)
+                .type(MediaType.APPLICATION_JSON)
+                .build();
     }
 
     @DELETE
@@ -58,13 +65,12 @@ public class User {
             return getErrorResponse(new ErrorMessage(404, "User " + username + " not found!"));
         }
         String json = gson.toJson(user);
-        return Response.ok(json,MediaType.APPLICATION_JSON).build();
+        return Response.ok(json, MediaType.APPLICATION_JSON).build();
     }
 
-    private Response getErrorResponse(ErrorMessage errorMessage) {
-        return Response.status(404)
-                .entity(errorMessage)
-                .type(MediaType.APPLICATION_JSON)
-                .build();
+    @GET
+    @Produces(MediaType.APPLICATION_JSON)
+    public String getUsers() {
+        return gson.toJson(facade.getUsers());
     }
 }
