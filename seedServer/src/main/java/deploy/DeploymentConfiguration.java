@@ -20,7 +20,7 @@ import java.util.logging.Logger;
 @WebListener
 public class DeploymentConfiguration implements ServletContextListener {
 
-  public static String PU_NAME = "PU-Local";
+  public static String PU_NAME = "CA3";
 
   @Override
   @SuppressWarnings("empty-statement")
@@ -49,7 +49,7 @@ public class DeploymentConfiguration implements ServletContextListener {
  
     boolean makeTestUser = context.getInitParameter("makeTestUser").toLowerCase().equals("true");
     if (makeTestUser) {
-      EntityManager em = Persistence.createEntityManagerFactory("pu_development").createEntityManager();
+      EntityManager em = Persistence.createEntityManagerFactory(PU_NAME).createEntityManager();
       try {
         System.out.println("Creating TEST Users");
         if (em.find(User.class, "user") == null) {

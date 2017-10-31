@@ -1,8 +1,9 @@
 package facades;
 
+import entity.Role;
+import security.IUserFacade;
 import entity.User;
 import security.IUser;
-import security.IUserFacade;
 import security.PasswordStorage;
 
 import javax.persistence.EntityManager;
@@ -28,6 +29,21 @@ public class UserFacade implements IUserFacade {
     public User getUserByUserId(String id) {
         EntityManager em = getEntityManager();
         return em.find(User.class, id);
+    }
+
+    public void registerUser(String username, String password) throws PasswordStorage.CannotPerformOperationException{
+        EntityManager em = getEntityManager();
+        try {
+            em.getTransaction().begin();
+            Role userRole = new Role("User");
+            User user = new User(username, password );
+            user.addRole(userRole);
+            em.persist(user);
+            em.getTransaction().commit();
+        }
+        finally {
+            em.close();
+        }
     }
 
     @Override
