@@ -27,18 +27,18 @@ public class UserFacade implements IUserFacade {
     @Override
     public IUser getUserByUserId(String id) {
         EntityManager em = getEntityManager();
-        try {
-            return em.find(User.class, id);
-        } finally {
-            em.close();
-        }
+        return em.find(User.class, id);
     }
 
     @Override
-    public User addUser(User user) {
+    public User deleteUser(String id) {
         EntityManager em = getEntityManager();
+        User user = em.find(User.class, id);
+        if (user == null) {
+            throw new EntityNotFoundException("User " + id + " not found!");
+        }
         em.getTransaction().begin();
-        em.persist(user);
+        em.remove(user);
         em.getTransaction().commit();
         return user;
     }
@@ -46,8 +46,8 @@ public class UserFacade implements IUserFacade {
     @Override
     public User editUser(User user) {
         EntityManager em = getEntityManager();
-        User editPerson = em.find(User.class, user.getUserName());
-        if (editPerson == null) {
+        User editUser = em.find(User.class, user.getUserName());
+        if (editUser == null) {
             throw new EntityNotFoundException("User " + user.getUserName() + " not found!");
         }
         em.getTransaction().begin();
