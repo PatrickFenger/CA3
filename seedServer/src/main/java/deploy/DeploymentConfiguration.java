@@ -1,6 +1,5 @@
 package deploy;
-
-import entity.Place;
+import entity.place;
 import entity.Role;
 import entity.User;
 import facades.UserFacade;
