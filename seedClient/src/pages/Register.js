@@ -13,14 +13,13 @@ class Register extends Component {
         const user = this.state.user.username;
         const pass = this.state.user.password;
         auth.register(user, pass, (err) => {
-            if (err) {             
+            if (err) {
+                setTimeout(() => this.props.history.push('/login'), 3000);
                 return this.setState({ err: err.errorMessage });
-            }
-            else {
-                this.setState({ err: "" });
-                setTimeout(() => this.props.history.push('/login'), 3000);                
-                return this.setState({ status: "Successful registration, please log in" })
-            }
+            }            
+            setTimeout(() => this.props.history.push('/login'), 3000);
+            return this.setState({ status: "Successful registration, please log in" });
+
 
         });
     }

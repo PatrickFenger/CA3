@@ -136,7 +136,7 @@ class AuthenticationHandler {
         return res.json();
       })
       .then(data => {
-        errorChecker(resFromFirstPromise, data);        
+        errorChecker(resFromFirstPromise, data);             
       })
       .catch(err => {
         console.log(err);
