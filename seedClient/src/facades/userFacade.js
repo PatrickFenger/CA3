@@ -1,5 +1,6 @@
 import fetchHelper, {errorChecker} from "./fetchHelpers"
-const URL = require("../../package.json").serverURL;
+import config from "../config.json"
+const URL = config.serverURL
 
 class UserStore {
   constructor() {
