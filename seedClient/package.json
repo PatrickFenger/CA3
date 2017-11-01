@@ -1,6 +1,6 @@
 {
   "name": "seedclient",
-  "serverURL": "http://localhost:8084/seedMaven/",
+  "serverURL": "http://localhost:8084/seedMaven",
   "version": "0.1.0",
   "private": true,
   "dependencies": {
@@ -16,5 +16,5 @@
     "test": "react-scripts test --env=jsdom",
     "eject": "react-scripts eject"
   },
-  "homepage": "https://pcatana.eu/seedClient"
+  "homepage": "http://localhost:8084/seedMaven"
 }

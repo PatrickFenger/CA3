@@ -31,6 +31,7 @@ public class UserFacade implements IUserFacade {
         return em.find(User.class, id);
     }
 
+    @Override
     public void registerUser(String username, String password) throws PasswordStorage.CannotPerformOperationException{
         EntityManager em = getEntityManager();
         try {
