@@ -46,8 +46,8 @@ public class User {
     @Produces(MediaType.APPLICATION_JSON)
     public Response deleteUser(@PathParam("username") String username) {
         try {
-            facade.deleteUser(username);
-            return Response.status(200).build();
+            String responseJson = gson.toJson(facade.deleteUser(username));
+            return Response.ok(responseJson, MediaType.APPLICATION_JSON).build();
         } catch (EntityNotFoundException e) {
             return getErrorResponse(new ErrorMessage(e));
         }

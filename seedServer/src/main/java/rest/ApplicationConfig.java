@@ -1,7 +1,7 @@
 package rest;
 
-import java.util.Set;
 import javax.ws.rs.core.Application;
+import java.util.Set;
 
 
 @javax.ws.rs.ApplicationPath("api")
@@ -29,6 +29,7 @@ public class ApplicationConfig extends Application {
     resources.add(rest.All.class);
     resources.add(rest.Register.class);
     resources.add(rest.User.class);
+    resources.add(PlaceResource.class);
     resources.add(security.JWTAuthenticationFilter.class);
     resources.add(security.Login.class);
     resources.add(security.NotAuthorizedExceptionMapper.class);

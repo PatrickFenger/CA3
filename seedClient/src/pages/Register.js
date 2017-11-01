@@ -5,7 +5,7 @@ import auth from "../authorization/auth";
 class Register extends Component {
     constructor() {
         super();
-        this.state = { err: "", status: "", user: { username: "", password: "" } }
+        this.state = { err: "", status: '', user: { username: "", password: "" } }
     }
 
     handleSubmit = (event) => {
@@ -13,16 +13,16 @@ class Register extends Component {
         const user = this.state.user.username;
         const pass = this.state.user.password;
         auth.register(user, pass, (err) => {
-            if (err) {             
+            if (err) {
                 return this.setState({ err: err.errorMessage });
+                
             }
             else {
-                this.setState({ err: "" });
-                setTimeout(() => this.props.history.push('/login'), 3000);                
-                return this.setState({ status: "Successful registration, please log in" })
-            }
-
-        });
+                setTimeout(() => this.props.history.push('/login'), 3000);
+                return this.setState({ status: 'Successful registration, please log in' });
+            }            
+            
+        });        
     }
 
     onChange = (e) => {
@@ -51,7 +51,7 @@ class Register extends Component {
                     </div>
                 )}
                 {this.state.status && (
-                    <div className="alert alert-success errmsg" role="alert">
+                    <div className="alert alert-success" role="alert">
                         {this.state.status}
                     </div>
                 )}
