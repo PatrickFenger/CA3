@@ -1,5 +1,6 @@
 package deploy;
 
+import entity.Place;
 import entity.Role;
 import entity.User;
 import facades.UserFacade;
@@ -70,6 +71,18 @@ public class DeploymentConfiguration implements ServletContextListener {
           em.persist(both);
           em.getTransaction().commit();
           System.out.println("Created TEST Users");
+        }
+        if(em.find(Place.class, "place") == null){
+            em.getTransaction().begin();
+            Place place = new Place();
+            place.setAddress("Wall Street, 26");
+            place.setCity("New York");
+            place.setDescription("Where the money at!");
+            place.setRating(5);
+            place.setZip("6666");
+            place.setImageUrl("http://financeblvd.com/wp-content/uploads/2017/08/wallstreetfeature.jpg");  
+            em.getTransaction().commit();
+            System.out.println("Created Places");
         }
       } catch (Exception ex) {
         Logger.getLogger(UserFacade.class.getName()).log(Level.SEVERE, null, ex);
