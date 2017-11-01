@@ -12,18 +12,17 @@ class Register extends Component {
         event.preventDefault()
         const user = this.state.user.username;
         const pass = this.state.user.password;
-        auth.register(user, pass, (err, loggedIn) => {
+        auth.register(user, pass, (err) => {
             if (err) {
                 return this.setState({ err: err.errorMessage });
+                
             }
             else {
                 setTimeout(() => this.props.history.push('/login'), 3000);
                 return this.setState({ status: 'Successful registration, please log in' });
-            }
-
-
-        });
-        console.log("state", this.state);
+            }            
+            
+        });        
     }
 
     onChange = (e) => {
