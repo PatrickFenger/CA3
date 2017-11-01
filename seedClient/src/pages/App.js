@@ -6,6 +6,7 @@ import About from "./About";
 import UserPage from "./UserPage";
 import AdminPage from "./AdminPage";
 import TopMenu from "./TopMenu";
+import Register from './Register';
 
 
 function App() {
@@ -14,6 +15,7 @@ function App() {
       <TopMenu />
       <Switch>
         <Route path="/login" component={Login} />
+        <Route path="/register" component={Register}/>
         <Route path="/logout" component={Logout} />
         <Route path="/about" component={About} />
         <Route path="/user" component={UserPage} />
