@@ -50,26 +50,26 @@ class AdminStore {
       })
   }
 
-  // editUser = (cb) => {
-  //   this._errorMessage = "";
-  //   this._messageFromServer = "";
-  //   let resFromFirstPromise=null;  //Pass on response the "second" promise so we can read errors from server
-  //   const options = fetchHelper.makeOptions("PUT", true, data);
-  //   fetch(URL + "api/demoadmin/users", options)
-  //     .then((res) => {
-  //       resFromFirstPromise = res; 
-  //       return res.json();
-  //     }).then((data) => {
-  //       errorChecker(resFromFirstPromise,data);
-  //       if (cb) {
-  //         cb(null, data.users)
-  //       }
-  //     }).catch(err => {
-  //       if (cb) {
-  //         cb({ err: fetchHelper.addJustErrorMessage(err) })
-  //       }
-  //     })
-  // }
+  editUser = (cb,data) => {
+    this._errorMessage = "";
+    this._messageFromServer = "";
+    let resFromFirstPromise=null;  //Pass on response the "second" promise so we can read errors from server
+    const options = fetchHelper.makeOptions("PUT", true, data);
+    fetch(URL + "api/user/", options)
+      .then((res) => {
+        resFromFirstPromise = res; 
+        return res.json();
+      }).then((data) => {
+        errorChecker(resFromFirstPromise,data);
+        if (cb) {
+          cb(null, data.users)
+        }
+      }).catch(err => {
+        if (cb) {
+          cb({ err: fetchHelper.addJustErrorMessage(err) })
+        }
+      })
+  }
 
   deleteUser = (cb, username) => {
     this._errorMessage = "";
