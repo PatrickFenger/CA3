@@ -5,23 +5,25 @@ import auth from "../authorization/auth";
 class Register extends Component {
     constructor() {
         super();
-        this.state = { err: "", status: "", user: { username: "", password: "" } }
+        this.state = { err: "", status: '', user: { username: "", password: "" } }
     }
 
     handleSubmit = (event) => {
         event.preventDefault()
         const user = this.state.user.username;
         const pass = this.state.user.password;
-        auth.register(user, pass, (err) => {
+        auth.register(user, pass, (err, loggedIn) => {
             if (err) {
-                setTimeout(() => this.props.history.push('/login'), 3000);
                 return this.setState({ err: err.errorMessage });
-            }            
-            setTimeout(() => this.props.history.push('/login'), 3000);
-            return this.setState({ status: "Successful registration, please log in" });
+            }
+            else {
+                setTimeout(() => this.props.history.push('/login'), 3000);
+                return this.setState({ status: 'Successful registration, please log in' });
+            }
 
 
         });
+        console.log("state", this.state);
     }
 
     onChange = (e) => {
@@ -50,7 +52,7 @@ class Register extends Component {
                     </div>
                 )}
                 {this.state.status && (
-                    <div className="alert alert-success errmsg" role="alert">
+                    <div className="alert alert-success" role="alert">
                         {this.state.status}
                     </div>
                 )}
