@@ -78,17 +78,13 @@ class AdminStore {
     const options = fetchHelper.makeOptions("DELETE", true);
     fetch(URL + "api/user/" + username, options)
       .then((res) => {
-        resFromFirstPromise = res; 
+        resFromFirstPromise = res;
         return res.json();
       }).then((data) => {
         errorChecker(resFromFirstPromise,data);
-        if (cb) {
-          cb(null)
-        }
+        cb(null)
       }).catch(err => {
-        if (cb) {
-          cb({ err: fetchHelper.addJustErrorMessage(err) })
-        }
+        cb({ err: fetchHelper.addJustErrorMessage(err) })
       })
   }
 

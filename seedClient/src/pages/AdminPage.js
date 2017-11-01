@@ -22,10 +22,8 @@ class AdminPage extends Component {
       if (e) {
         return this.setState({ errData: e.err })
       }
-      console.log(this.state.data)
-      let newData = this.state.data.filter((obj) => obj.field !== username)
-      console.log(newData)
-      this.setState({ errData: "", newData });
+      let users = this.state.users.filter((user) => user.USER_NAME !== username)
+      this.setState({ errData: "", users });
     },username);
   }
 
