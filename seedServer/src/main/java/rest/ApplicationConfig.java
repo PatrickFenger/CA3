@@ -1,7 +1,7 @@
 package rest;
 
-import java.util.Set;
 import javax.ws.rs.core.Application;
+import java.util.Set;
 
 
 @javax.ws.rs.ApplicationPath("api")
@@ -27,6 +27,7 @@ public class ApplicationConfig extends Application {
     resources.add(httpErrors.NotFoundExceptionMapper.class);
     resources.add(rest.Admin.class);
     resources.add(rest.All.class);
+    resources.add(rest.PlaceResource.class);
     resources.add(rest.Register.class);
     resources.add(rest.User.class);
     resources.add(security.JWTAuthenticationFilter.class);
