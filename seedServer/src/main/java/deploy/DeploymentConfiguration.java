@@ -71,9 +71,9 @@ public class DeploymentConfiguration implements ServletContextListener {
           em.getTransaction().commit();
           System.out.println("Created TEST Users");
         }
-        if(em.find(Place.class, "place") == null){
+        if(em.find(place.class, "place") == null){
             em.getTransaction().begin();
-            Place place = new Place();
+            place place = new place();
             place.setAddress("Wall Street, 26");
             place.setCity("New York");
             place.setDescription("Where the money at!");
