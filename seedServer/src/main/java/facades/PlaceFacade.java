@@ -1,6 +1,6 @@
 package facades;
 
-import entity.Place;
+import entity.place;
 
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
@@ -20,9 +20,9 @@ public class PlaceFacade {
         return emf.createEntityManager();
     }
 
-    public List<Place> getAllPlaces() {
+    public List<place> getAllPlaces() {
         EntityManager em = getEntityManager();
-        List<Place> places;
+        List<place> places;
         try {
             em.getTransaction().begin();
             places = em.createQuery("SELECT u FROM Place u").getResultList();

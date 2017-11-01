@@ -10,7 +10,7 @@ import javax.validation.constraints.NotNull;
  * Created by adam on 01/11/2017.
  */
 @Entity
-public class Place {
+public class place {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
