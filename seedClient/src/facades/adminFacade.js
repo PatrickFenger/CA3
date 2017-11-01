@@ -1,6 +1,6 @@
 import fetchHelper, {errorChecker} from "./fetchHelpers"
-const URL = require("../../package.json").serverURL;
-
+import config from "../config.json"
+const URL = config.serverURL
 
 class AdminStore {
   constructor() {
@@ -42,6 +42,48 @@ class AdminStore {
         errorChecker(resFromFirstPromise,data);
         if (cb) {
           cb(null, data.users)
+        }
+      }).catch(err => {
+        if (cb) {
+          cb({ err: fetchHelper.addJustErrorMessage(err) })
+        }
+      })
+  }
+
+  // editUser = (cb) => {
+  //   this._errorMessage = "";
+  //   this._messageFromServer = "";
+  //   let resFromFirstPromise=null;  //Pass on response the "second" promise so we can read errors from server
+  //   const options = fetchHelper.makeOptions("PUT", true, data);
+  //   fetch(URL + "api/demoadmin/users", options)
+  //     .then((res) => {
+  //       resFromFirstPromise = res; 
+  //       return res.json();
+  //     }).then((data) => {
+  //       errorChecker(resFromFirstPromise,data);
+  //       if (cb) {
+  //         cb(null, data.users)
+  //       }
+  //     }).catch(err => {
+  //       if (cb) {
+  //         cb({ err: fetchHelper.addJustErrorMessage(err) })
+  //       }
+  //     })
+  // }
+
+  deleteUser = (cb, username) => {
+    this._errorMessage = "";
+    this._messageFromServer = "";
+    let resFromFirstPromise=null;  //Pass on response the "second" promise so we can read errors from server
+    const options = fetchHelper.makeOptions("DELETE", true);
+    fetch(URL + "api/user/" + username, options)
+      .then((res) => {
+        resFromFirstPromise = res; 
+        return res.json();
+      }).then((data) => {
+        errorChecker(resFromFirstPromise,data);
+        if (cb) {
+          cb(null)
         }
       }).catch(err => {
         if (cb) {

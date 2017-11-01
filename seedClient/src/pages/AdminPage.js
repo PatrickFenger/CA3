@@ -13,6 +13,22 @@ class AdminPage extends Component {
     }
   }
 
+  onEdit = (username) => {
+    return 0;
+  }
+
+  onDelete = (username) => {
+    adminData.deleteUser((e) => {
+      if (e) {
+        return this.setState({ errData: e.err })
+      }
+      console.log(this.state.data)
+      let newData = this.state.data.filter((obj) => obj.field !== username)
+      console.log(newData)
+      this.setState({ errData: "", newData });
+    },username);
+  }
+
   componentWillMount() {
     /*
     This will fetch data each time you navigate to this route
@@ -50,12 +66,16 @@ class AdminPage extends Component {
                 <tr>
                   <th> User</th>
                   <th> Roles</th>
+                  <th> Edit</th>
+                  <th> Delete</th>
                 </tr>
                 {this.state.users.map((user, index) => {
                   return (
                     <tr key={index}>
                       <td >{user.USER_NAME} </td>
                       <td >{user.USER_ROLE} </td>
+                      <td ><button className="btn btn-lg btn-black btn-block" onClick={() => this.onEdit(user.USER_NAME)}>EDIT</button> </td>
+                      <td ><button className="btn btn-lg btn-black btn-block" onClick={() => this.onDelete(user.USER_NAME)}>DELETE</button></td>
                     </tr>
                   )
                 })}

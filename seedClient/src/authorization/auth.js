@@ -1,7 +1,7 @@
 import jwtDecode from "jwt-decode";
 import fetchHelper, { errorChecker } from "../facades/fetchHelpers"
-
-const URL = require("../../package.json").serverURL;
+import config from "../config.json"
+const URL = config.serverURL
 
 class AuthenticationHandler {
 
