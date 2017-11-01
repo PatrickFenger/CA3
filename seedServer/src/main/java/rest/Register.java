@@ -11,7 +11,9 @@ import javax.ws.rs.Produces;
 import javax.ws.rs.POST;
 import javax.ws.rs.Path;
 import javax.ws.rs.core.MediaType;
+import security.IUserFacade;
 import security.PasswordStorage;
+import security.UserFacadeFactory;
 
 @Path("register")
 public class Register {
@@ -30,9 +32,9 @@ public class Register {
         String username = json.get("username").getAsString();
         String password = json.get("password").getAsString();
         
-        EntityManagerFactory emf = Persistence.createEntityManagerFactory("CA3");
-        UserFacade uf = new UserFacade(emf);
-        uf.registerUser(username, password);
+        
+        IUserFacade facade = UserFacadeFactory.getInstance();
+        facade.registerUser(username, password);
         return gson.toJson(username);
         
 
