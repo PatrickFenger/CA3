@@ -13,13 +13,13 @@ class AdminPage extends Component {
     }
   }
 
-  onEdit = (index) => {
+  onEdit = (user) => {
     adminData.editUser((e) => {
       if (e) {
         return this.setState({ errData: e.err })
       }
-      this.setState({ errData: "", users });
-    },this.state.users[index]);
+      this.setState({ errData: ""});
+    },user);
   }
 
   onDelete = (username) => {
@@ -89,7 +89,7 @@ class AdminPage extends Component {
                       <td >
                       <input name="USER_ROLE" value={user.USER_ROLE} onChange={(e) => this.onChange(e, index)} className="form-control"  placeholder={user.USER_ROLE} />
                       </td>
-                      <td ><button className="btn btn-lg btn-black btn-block" onClick={() => this.onEdit(user.USER_NAME)}>EDIT</button> </td>
+                      <td ><button className="btn btn-lg btn-black btn-block" onClick={() => this.onEdit(user)}>EDIT</button> </td>
                       <td ><button className="btn btn-lg btn-black btn-block" onClick={() => this.onDelete(user.USER_NAME)}>DELETE</button></td>
                     </tr>
                   )
