@@ -1,14 +1,12 @@
 package rest;
 
 import com.google.gson.Gson;
-import facades.UserFacade;
-import rest.utilities.ExclusionGsonBuilder;
 import rest.utilities.ErrorMessage;
+import rest.utilities.ExclusionGsonBuilder;
 import security.IUserFacade;
+import security.UserFacadeFactory;
 
-import javax.persistence.EntityManagerFactory;
 import javax.persistence.EntityNotFoundException;
-import javax.persistence.Persistence;
 import javax.ws.rs.*;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
@@ -20,8 +18,7 @@ public class User {
 
     public User() {
         this.gson = new ExclusionGsonBuilder().excludeFieldNames("users","passwordHash").buildGson();
-        EntityManagerFactory emf = Persistence.createEntityManagerFactory("CA3");
-        facade = new UserFacade(emf);
+        facade = UserFacadeFactory.getInstance();
     }
 
     @PUT

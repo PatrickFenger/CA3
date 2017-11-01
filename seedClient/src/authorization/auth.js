@@ -121,7 +121,7 @@ class AuthenticationHandler {
   register = (username, password, cb) => {
     this._errorMessage = "";
     var user = { username, password };
-
+    
     var options = {
       method: "POST",
       body: JSON.stringify(user),
@@ -136,7 +136,8 @@ class AuthenticationHandler {
         return res.json();
       })
       .then(data => {
-        errorChecker(resFromFirstPromise, data);        
+        errorChecker(resFromFirstPromise, data);  
+        cb(null);
       })
       .catch(err => {
         console.log(err);
