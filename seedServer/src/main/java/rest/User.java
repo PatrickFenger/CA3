@@ -20,7 +20,7 @@ public class User {
 
     public User() {
         this.gson = new ExclusionGsonBuilder().excludeFieldNames("users","passwordHash").buildGson();
-        EntityManagerFactory emf = Persistence.createEntityManagerFactory("pu_development");
+        EntityManagerFactory emf = Persistence.createEntityManagerFactory("CA3");
         facade = new UserFacade(emf);
     }
 

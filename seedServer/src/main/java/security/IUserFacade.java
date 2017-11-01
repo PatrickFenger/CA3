@@ -19,4 +19,9 @@ public interface IUserFacade {
     User deleteUser(String id);
     User editUser(User user);
 
+    
+    void registerUser(String username, String password) throws PasswordStorage.CannotPerformOperationException;
+    
+    
+    
 }

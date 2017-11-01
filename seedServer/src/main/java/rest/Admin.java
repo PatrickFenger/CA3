@@ -36,7 +36,7 @@ public class Admin {
     @Path("users")
     @Produces(MediaType.APPLICATION_JSON)
     public String getUsers(){
-        EntityManagerFactory emf = Persistence.createEntityManagerFactory("pu_development");
+        EntityManagerFactory emf = Persistence.createEntityManagerFactory("CA3");
         UserFacade uf = new UserFacade(emf);
         
         List<entity.User> users = uf.getUsers();
