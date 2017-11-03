@@ -36,7 +36,7 @@ export default class Places extends React.Component {
     }
     
     filterList = (event) => {
-        var updatedList = this.state.initialPLaces;
+        var updatedList = this.state.initialPlaces;
         var value = event.target.value.toLowerCase();
         updatedList = updatedList.filter(function(place)  {
             return place.city.toLowerCase().search(value) !== -1 ||
