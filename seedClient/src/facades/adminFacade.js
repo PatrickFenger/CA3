@@ -51,8 +51,8 @@ class AdminStore {
   }
 
   editUser = (cb,user) => {
+    console.log(user.USER_ROLE)
     let data = {
-      userName:user.USER_NAME,
       roles: user.USER_ROLE.map( (role) => { return {roleName:role} } )
     };
     console.log(data);
@@ -60,7 +60,7 @@ class AdminStore {
     this._messageFromServer = "";
     let resFromFirstPromise=null;  //Pass on response the "second" promise so we can read errors from server
     const options = fetchHelper.makeOptions("PUT", true, data);
-    fetch(URL + "api/user", options)
+    fetch(URL + "api/users/roles" + user.USER_NAME, options)
       .then((res) => {
         resFromFirstPromise = res; 
         return res.json();
@@ -81,7 +81,7 @@ class AdminStore {
     this._messageFromServer = "";
     let resFromFirstPromise=null;  //Pass on response the "second" promise so we can read errors from server
     const options = fetchHelper.makeOptions("DELETE", true);
-    fetch(URL + "api/user/" + username, options)
+    fetch(URL + "api/users/" + username, options)
       .then((res) => {
         resFromFirstPromise = res;
         return res.json();

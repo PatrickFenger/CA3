@@ -38,7 +38,7 @@ class AdminPage extends Component {
     if(propertyName !== "USER_ROLE")
       value = e.target.value;
     else
-      value = e.target.value.split();
+      value = e.target.value.split(",");
     const finalValue = value;
     let users = this.state.users;
     users[index][propertyName] = value;
