@@ -1,6 +1,7 @@
 {
   "name": "seedclient",
   "version": "0.1.0",
+  "serverURL": "https://hyggeadam.cz/backend/ca3backend/",
   "private": true,
   "dependencies": {
     "jwt-decode": "^2.2.0",
@@ -15,5 +16,5 @@
     "test": "react-scripts test --env=jsdom",
     "eject": "react-scripts eject"
   },
-  "homepage": "http://localhost:8084/"
+  "homepage": "https://hyggeadam.cz/backend/ca3backend/"
 }
