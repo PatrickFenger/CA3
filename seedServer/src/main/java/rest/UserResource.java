@@ -1,6 +1,7 @@
 package rest;
 
 import com.google.gson.Gson;
+import entity.User;
 import rest.utilities.ErrorResponse;
 import rest.utilities.ExclusionGsonBuilder;
 import security.IUserFacade;
@@ -12,11 +13,11 @@ import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 
 @Path("user")
-public class User {
+public class UserResource {
     Gson gson;
     IUserFacade facade;
 
-    public User() {
+    public UserResource() {
         this.gson = new ExclusionGsonBuilder().excludeFieldNames("users","passwordHash").buildGson();
         facade = UserFacadeFactory.getInstance();
     }
@@ -25,7 +26,7 @@ public class User {
     @Consumes(MediaType.APPLICATION_JSON)
     @Produces(MediaType.APPLICATION_JSON)
     public Response editUser(String json) {
-        entity.User user = gson.fromJson(json, entity.User.class);
+        User user = gson.fromJson(json, User.class);
         try {
             String responseJson = gson.toJson(facade.editUser(user));
             return Response.ok(responseJson, MediaType.APPLICATION_JSON).build();
@@ -50,9 +51,9 @@ public class User {
     @Path("{username}")
     @Produces(MediaType.APPLICATION_JSON)
     public Response getUser(@PathParam("username") String username) {
-        entity.User user = facade.getUserByUserId(username);
+        User user = facade.getUserByUserId(username);
         if (user == null) {
-            return new ErrorResponse(404, "User " + username + " not found!").build();
+            return new ErrorResponse(404, "UserResource " + username + " not found!").build();
         }
         String json = gson.toJson(user);
         return Response.ok(json, MediaType.APPLICATION_JSON).build();

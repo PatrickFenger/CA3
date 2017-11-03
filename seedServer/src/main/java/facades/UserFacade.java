@@ -36,7 +36,7 @@ public class UserFacade implements IUserFacade {
         EntityManager em = getEntityManager();
         try {
             em.getTransaction().begin();
-            Role userRole = new Role("User");
+            Role userRole = new Role("UserResource");
             User user = new User(username, password );
             user.addRole(userRole);
             em.persist(user);
@@ -52,7 +52,7 @@ public class UserFacade implements IUserFacade {
         EntityManager em = getEntityManager();
         User user = em.find(User.class, id);
         if (user == null) {
-            throw new EntityNotFoundException("User " + id + " not found!");
+            throw new EntityNotFoundException("UserResource " + id + " not found!");
         }
         em.getTransaction().begin();
         em.remove(user);
@@ -65,7 +65,7 @@ public class UserFacade implements IUserFacade {
         EntityManager em = getEntityManager();
         User editUser = em.find(User.class, user.getUserName());
         if (editUser == null) {
-            throw new EntityNotFoundException("User " + user.getUserName() + " not found!");
+            throw new EntityNotFoundException("UserResource " + user.getUserName() + " not found!");
         }
         em.getTransaction().begin();
         em.merge(user);
