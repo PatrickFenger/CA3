@@ -72,12 +72,9 @@ public class DeploymentConfiguration implements ServletContextListener {
                     em.persist(adminRole);
                     em.persist(user);
                     em.persist(admin);
-                    em.persist(both);
-                    em.getTransaction().commit();
-                    System.out.println("Created TEST Users");
-                }
-                if (em.find(Place.class, 1) == null) {
-                    em.getTransaction().begin();
+                    em.persist(both);                   
+                
+               
                     Place place = new Place();
                     place.setAddress("Wall Street, 26");
                     place.setCity("New York");
@@ -85,23 +82,50 @@ public class DeploymentConfiguration implements ServletContextListener {
                     place.setRating(5);
                     place.setZip("6666");
                     place.setImageUrl("http://financeblvd.com/wp-content/uploads/2017/08/wallstreetfeature.jpg");
-                    em.persist(place);
-                    em.getTransaction().commit();
-                   
-                }
-                if (em.find(Place.class, 1) == null) {
-                    em.getTransaction().begin();
+                    
                     Place place1 = new Place();
                     place1.setAddress("Kjeldsgårdsvej 27C, 3th.");
                     place1.setCity("Copenhagen");
-                    place1.setDescription("Beauty of Denmark");
-                    place1.setRating(5);
+                    place1.setDescription("Valby");
+                    place1.setRating(3);
                     place1.setZip("2500");
                     place1.setImageUrl("http://rejsebox.dk/wp-content/uploads/2016/08/rejsebox-34673457_l-2015.jpg");
-                    em.persist(place1);
-                    em.getTransaction().commit();
                     
+                    Place place2 = new Place();
+                    place2.setAddress("Tværager 63");
+                    place2.setCity("Greve");
+                    place2.setDescription("Parents");
+                    place2.setRating(1);
+                    place2.setZip("2670");
+                    place2.setImageUrl("http://rejsebox.dk/wp-content/uploads/2016/08/rejsebox-34673457_l-2015.jpg");
+                   
+                    
+                    Place place3 = new Place();
+                    place3.setAddress("Kjeldsgårdsvej 27C, 3th.");
+                    place3.setCity("Sweden");
+                    place3.setDescription("Lalandia");
+                    place3.setRating(4);
+                    place3.setZip("2500");
+                    place3.setImageUrl("http://rejsebox.dk/wp-content/uploads/2016/08/rejsebox-34673457_l-2015.jpg");
+                    
+                    Place place4 = new Place();
+                    place4.setAddress("Kjeldsgårdsvej 27C, 3th.");
+                    place4.setCity("Maribo");
+                    place4.setDescription("Beauty of Denmark");
+                    place4.setRating(2);
+                    place4.setZip("2500");
+                    place4.setImageUrl("http://rejsebox.dk/wp-content/uploads/2016/08/rejsebox-34673457_l-2015.jpg");
+               
+                    em.persist(place);
+                    em.persist(place1);
+                    em.persist(place2);
+                    em.persist(place3);
+                    em.persist(place4);
+                 
+                  
+                    em.getTransaction().commit();
                 }
+                
             } catch (Exception ex) {
                 Logger.getLogger(UserFacade.class.getName()).log(Level.SEVERE, null, ex);
                 em.getTransaction().rollback();
