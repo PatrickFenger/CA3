@@ -25,7 +25,7 @@ public class UserResource {
         facade = UserFacadeFactory.getInstance();
     }
 
-    @Path("roles/{username}")
+    @Path("{username}/roles")
     @PUT
     @Consumes(MediaType.APPLICATION_JSON)
     @Produces(MediaType.APPLICATION_JSON)
