@@ -3,7 +3,9 @@ package deploy;
 import entity.Place;
 import entity.Role;
 import entity.User;
+import facades.PlaceFacade;
 import facades.UserFacade;
+import rest.PlaceResource;
 import security.Secret;
 
 import javax.persistence.EntityManager;
@@ -34,18 +36,22 @@ public class DeploymentConfiguration implements ServletContextListener {
         InputStream input = null;
         Properties prop = new Properties();
         try {
-            input = getClass().getClassLoader().getResourceAsStream("/config.properties");;
+            input = getClass().getClassLoader().getResourceAsStream("/config.properties");
+            ;
             if (input == null) {
                 System.out.println("Could not load init-properties");
                 return;
             }
             prop.load(input);
             Secret.SHARED_SECRET = prop.getProperty("tokenSecret").getBytes();
+            PlaceResource.FILE_LOCATION = prop.getProperty("fileLocation");
+            PlaceFacade.BASE_IMAGE_URL = prop.getProperty("baseImageUrl");
             input.close();
 
         } catch (IOException ex) {
             Logger.getLogger(DeploymentConfiguration.class.getName()).log(Level.SEVERE, null, ex);
         }
+
         ServletContext context = sce.getServletContext();
 
         boolean makeTestUser = context.getInitParameter("makeTestUser").toLowerCase().equals("true");
@@ -53,7 +59,7 @@ public class DeploymentConfiguration implements ServletContextListener {
             EntityManager em = Persistence.createEntityManagerFactory(PU_NAME).createEntityManager();
             try {
                 System.out.println("Creating TEST Users");
-                if (em.find(User.class, "user") == null ) {
+                if (em.find(User.class, "user") == null) {
                     em.getTransaction().begin();
                     Role userRole = new Role("User");
                     Role adminRole = new Role("Admin");
@@ -68,10 +74,9 @@ public class DeploymentConfiguration implements ServletContextListener {
                     em.persist(adminRole);
                     em.persist(user);
                     em.persist(admin);
-                    em.persist(both);
-
-                    System.out.println("Created TEST Users");
-
+                    em.persist(both);                   
+                
+               
                     Place place = new Place();
                     place.setAddress("Wall Street, 26");
                     place.setCity("New York");
@@ -80,36 +85,56 @@ public class DeploymentConfiguration implements ServletContextListener {
                     place.setZip("6666");
                     place.setImageUrl("http://financeblvd.com/wp-content/uploads/2017/08/wallstreetfeature.jpg");
                     
+                    Place place1 = new Place();
+                    place1.setAddress("Kjeldsgårdsvej 27C, 3th.");
+                    place1.setCity("Copenhagen");
+                    place1.setDescription("Valby");
+                    place1.setRating(3);
+                    place1.setZip("2500");
+                    place1.setImageUrl("http://rejsebox.dk/wp-content/uploads/2016/08/rejsebox-34673457_l-2015.jpg");
+                    
                     Place place2 = new Place();
-                    place2.setAddress("Nuhavn 7");
-                    place2.setCity("Kobenhavn");
-                    place2.setDescription("WHere the blondes at");
-                    place2.setImageUrl("http://cdn-image.travelandleisure.com/sites/default/files/styles/1600x1000/public/header-facebook-copenhagen-cph0416.jpg?itok=-2LcgY1H");
-                    place2.setZip("1234");
-                    place2.setRating(4);
+                    place2.setAddress("Tværager 63");
+                    place2.setCity("Greve");
+                    place2.setDescription("Parents");
+                    place2.setRating(1);
+                    place2.setZip("2670");
+                    place2.setImageUrl("http://rejsebox.dk/wp-content/uploads/2016/08/rejsebox-34673457_l-2015.jpg");
+                   
                     
                     Place place3 = new Place();
-                    place3.setAddress("Praca do Comercio");
-                    place3.setCity("Lisbon");
-                    place3.setDescription("Where the sun is");
-                    place3.setImageUrl("https://media.cntraveler.com/photos/58f984542867946a9cbe1f11/master/pass/praca-do-comercio-lisbon-GettyImages-648812458.jpg");
-                    place3.setZip("3000");
-                    place3.setRating(5);
+                    place3.setAddress("Kjeldsgårdsvej 27C, 3th.");
+                    place3.setCity("Sweden");
+                    place3.setDescription("Lalandia");
+                    place3.setRating(4);
+                    place3.setZip("2500");
+                    place3.setImageUrl("http://rejsebox.dk/wp-content/uploads/2016/08/rejsebox-34673457_l-2015.jpg");
                     
+                    Place place4 = new Place();
+                    place4.setAddress("Kjeldsgårdsvej 27C, 3th.");
+                    place4.setCity("Maribo");
+                    place4.setDescription("Beauty of Denmark");
+                    place4.setRating(2);
+                    place4.setZip("2500");
+                    place4.setImageUrl("http://rejsebox.dk/wp-content/uploads/2016/08/rejsebox-34673457_l-2015.jpg");
+               
                     em.persist(place);
+                    em.persist(place1);
                     em.persist(place2);
                     em.persist(place3);
-                    System.out.println("Created Places");
-                    
+                    em.persist(place4);
+                 
+                  
                     em.getTransaction().commit();
                 }
-
+                
             } catch (Exception ex) {
                 Logger.getLogger(UserFacade.class.getName()).log(Level.SEVERE, null, ex);
                 em.getTransaction().rollback();
             } finally {
                 em.close();
             }
+
         }
     }
 
@@ -118,3 +143,4 @@ public class DeploymentConfiguration implements ServletContextListener {
 
     }
 }
+

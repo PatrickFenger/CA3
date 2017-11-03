@@ -1,7 +1,7 @@
 package rest;
 
 import com.google.gson.Gson;
-import rest.utilities.ErrorMessage;
+import rest.utilities.ErrorResponse;
 import rest.utilities.ExclusionGsonBuilder;
 import security.IUserFacade;
 import security.UserFacadeFactory;
@@ -30,15 +30,8 @@ public class User {
             String responseJson = gson.toJson(facade.editUser(user));
             return Response.ok(responseJson, MediaType.APPLICATION_JSON).build();
         } catch (EntityNotFoundException e) {
-            return getErrorResponse(new ErrorMessage(e));
+            return new ErrorResponse(e).build();
         }
-    }
-
-    private Response getErrorResponse(ErrorMessage errorMessage) {
-        return Response.status(errorMessage.getStatus())
-                .entity(errorMessage)
-                .type(MediaType.APPLICATION_JSON)
-                .build();
     }
 
     @DELETE
@@ -49,7 +42,7 @@ public class User {
             String responseJson = gson.toJson(facade.deleteUser(username));
             return Response.ok(responseJson, MediaType.APPLICATION_JSON).build();
         } catch (EntityNotFoundException e) {
-            return getErrorResponse(new ErrorMessage(e));
+            return new ErrorResponse(e).build();
         }
     }
 
@@ -59,7 +52,7 @@ public class User {
     public Response getUser(@PathParam("username") String username) {
         entity.User user = facade.getUserByUserId(username);
         if (user == null) {
-            return getErrorResponse(new ErrorMessage(404, "User " + username + " not found!"));
+            return new ErrorResponse(404, "User " + username + " not found!").build();
         }
         String json = gson.toJson(user);
         return Response.ok(json, MediaType.APPLICATION_JSON).build();
