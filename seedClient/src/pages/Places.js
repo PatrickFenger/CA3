@@ -1,24 +1,29 @@
 import React from 'react';
 import { serverURL } from '../config.json'
+import auth from '../authorization/auth'
+
 export default class Places extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
             places: [],
-            initialPlaces: []
+            initialPlaces: [],
+            loggedIn: auth.loggedIn, userName: auth.userName, isUser: auth.isUser, isAdmin: auth.isAdmin
         }
     }
 
+    
     filterList = (event) => {
         var updatedList = this.state.initialPlaces;
         var value = event.target.value.toLowerCase();
         updatedList = updatedList.filter(function (place) {
-            return place.city.toLowerCase().search(value) !== -1 
-            || place.description.toLowerCase().search(value) !== -1
-            || place.zip.toLowerCase().search(value) !== -1
+            return place.city.toLowerCase().search(value) !== -1
+                || place.description.toLowerCase().search(value) !== -1
+                || place.zip.toLowerCase().search(value) !== -1
         });
         this.setState({ places: updatedList })
     }
+
 
     componentDidMount() {
         fetch(serverURL + "api/places")
@@ -34,28 +39,27 @@ export default class Places extends React.Component {
             })
 
     }
-    
+
     filterList = (event) => {
         var updatedList = this.state.initialPlaces;
         var value = event.target.value.toLowerCase();
-        updatedList = updatedList.filter(function(place)  {
+        updatedList = updatedList.filter(function (place) {
             return place.city.toLowerCase().search(value) !== -1 ||
-                   place.description.toLowerCase().search(value) !== -1           
+                place.description.toLowerCase().search(value) !== -1
         });
-        this.setState({places: updatedList});
+        this.setState({ places: updatedList });
     }
 
+    
 
     render() {
         const places = this.state.places;
-        
         return (
             <div className="container">
-                <div>
-                    <input type="text" placeholder="search" onChange={this.filterList} />
-
-
-                </div>
+                <div className="line">
+                    <input className="theLine" type="text" placeholder="search" onChange={this.filterList} />
+                    <AddPlace className="theLine" isOrNot={this.state}/>
+                </div>                
                 <div className="row">
                     {
                         places.map((place) => {
@@ -79,3 +83,11 @@ export default class Places extends React.Component {
     }
 }
 
+const AddPlace = (props)  =>{       
+    let isOrNot = props.isOrNot;
+    if(isOrNot.isUser || isOrNot.isAdmin){
+        return <button className="btn add" >Add Place</button>
+    }else {
+        return ""
+    }
+}
