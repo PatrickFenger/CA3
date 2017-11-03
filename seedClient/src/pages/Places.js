@@ -1,4 +1,5 @@
 import React from 'react';
+import { Link, Route } from 'react-router-dom'
 import { serverURL } from '../config.json'
 import auth from '../authorization/auth'
 
@@ -12,7 +13,7 @@ export default class Places extends React.Component {
         }
     }
 
-    
+
     filterList = (event) => {
         var updatedList = this.state.initialPlaces;
         var value = event.target.value.toLowerCase();
@@ -50,16 +51,30 @@ export default class Places extends React.Component {
         this.setState({ places: updatedList });
     }
 
-    
+    pushToList = (place) => {
+        let allPlaces = this.state.initialPlaces;
+        allPlaces.push(place);
+        this.setState({
+            places: allPlaces,
+            initialPlaces: allPlaces
+        })
+        this.props.history.push("/places");
+    }
+
+
 
     render() {
         const places = this.state.places;
         return (
             <div className="container">
                 <div className="line">
-                    <input className="theLine" type="text" placeholder="search" onChange={this.filterList} />
-                    <AddPlace className="theLine" isOrNot={this.state}/>
-                </div>                
+                    <input className="theLine input" type="text" placeholder="search" onChange={this.filterList} />
+                    <AddPlace className="theLine" isOrNot={this.state} />
+                </div>
+                <div>
+                    <Route path="/places/add" render={() => {return <Add  onAddPlace={this.pushToList}/> }} />
+                </div>
+
                 <div className="row">
                     {
                         places.map((place) => {
@@ -83,11 +98,64 @@ export default class Places extends React.Component {
     }
 }
 
-const AddPlace = (props)  =>{       
+const AddPlace = (props) => {
     let isOrNot = props.isOrNot;
-    if(isOrNot.isUser || isOrNot.isAdmin){
-        return <button className="btn add" >Add Place</button>
-    }else {
+    if (isOrNot.isUser || isOrNot.isAdmin) {
+        return <Link className="btn btn-alert add" to="/places/add">Add Place</Link>
+    } else {
         return ""
+    }
+}
+
+class Add extends React.Component {
+    constructor() {
+        super();
+        this.state = {
+            city: "",
+            address: "",
+            zip: "",
+            description: "",
+            file: null
+        }
+    }
+
+    handleChange = (event) => {
+        const target = event.target;
+        const value = target.type === 'file' ? target.files[0] : target.value;
+        const name = target.name;
+        this.setState({
+            [name]: value
+        })
+    }
+
+    handleSubmit = (event) => {
+        event.preventDefault();
+        const formData = new FormData();
+        for (var key in this.state) {
+            formData.append(key, this.state[key]);
+        }
+
+        fetch(serverURL + "api/places/add", { method: "POST", body: formData })
+            .then(res => {
+                return res.json();
+            })
+            .then(place => {
+                this.props.onAddPlace(place);
+            })
+
+    }
+
+
+    render() {
+        return (
+            <form onSubmit={this.handleSubmit}>
+                <input type="text" name="city" placeholder="City" onChange={this.handleChange} />
+                <input type="text" name="address" placeholder="Address" onChange={this.handleChange} />
+                <input type="text" name="zip" placeholder="Zip" onChange={this.handleChange} />
+                <input type="text" name="description" placeholder="Description" onChange={this.handleChange} />
+                <input type="file" name="file" onChange={this.handleChange} />
+                <button type="submit" >Submit</button>
+            </form>
+        )
     }
 }
