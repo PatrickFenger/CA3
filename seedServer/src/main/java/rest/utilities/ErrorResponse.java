@@ -1,6 +1,7 @@
 package rest.utilities;
 
 import javax.persistence.EntityNotFoundException;
+import javax.ws.rs.core.Response;
 import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlRootElement;
 
@@ -8,18 +9,18 @@ import javax.xml.bind.annotation.XmlRootElement;
  * Created by adam on 31/10/2017.
  */
 @XmlRootElement
-public class ErrorMessage {
+public class ErrorResponse {
     @XmlElement(name = "status")
     int status;
     @XmlElement(name = "message")
     String message;
 
-    public ErrorMessage(EntityNotFoundException e) {
+    public ErrorResponse(EntityNotFoundException e) {
         this.status = 404;
         this.message = e.getMessage();
     }
 
-    public ErrorMessage(int status, String message) {
+    public ErrorResponse(int status, String message) {
         this.status = status;
         this.message = message;
     }
@@ -38,5 +39,9 @@ public class ErrorMessage {
 
     public void setMessage(String message) {
         this.message = message;
+    }
+
+    public Response build() {
+        return Response.status(status).entity(this).build();
     }
 }
