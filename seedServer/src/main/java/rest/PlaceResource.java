@@ -43,12 +43,12 @@ public class PlaceResource {
                                @FormDataParam("file") InputStream file,
                                @FormDataParam("file") FormDataContentDisposition fileDisposition) throws IOException {
         String fileName = fileDisposition.getFileName();
-        File image = saveFile(file, fileName);
-        Place place = facade.addPlace(address,city,zip,description,image);
+        saveFile(file, fileName);
+        Place place = facade.addPlace(address,city,zip,description,fileName);
         return Response.ok(gson.toJson(place)).build();
     }
 
-    private File saveFile(InputStream is, String fileLocation) throws IOException {
+    private void saveFile(InputStream is, String fileLocation) throws IOException {
         String location = FILE_LOCATION + fileLocation;
         File file = new File(location);
         OutputStream os = new FileOutputStream(file);
@@ -57,6 +57,5 @@ public class PlaceResource {
         while ((bytes = is.read(buffer)) != -1) {
             os.write(buffer, 0, bytes);
         }
-        return file;
     }
 }

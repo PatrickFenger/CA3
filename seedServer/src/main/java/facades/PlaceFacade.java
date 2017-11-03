@@ -4,7 +4,6 @@ import entity.Place;
 
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
-import java.io.File;
 import java.util.List;
 
 /**
@@ -34,7 +33,7 @@ public class PlaceFacade {
         }
     }
 
-    public Place addPlace(String address, String city, String zip, String desctiption, File image) {
+    public Place addPlace(String address, String city, String zip, String desctiption, String image) {
         EntityManager em = getEntityManager();
         try {
             em.getTransaction().begin();
@@ -43,7 +42,7 @@ public class PlaceFacade {
             place.setCity(city);
             place.setZip(zip);
             place.setDescription(desctiption);
-            place.setImageUrl(image.getPath());
+            place.setImageUrl(image);
             em.persist(place);
             em.getTransaction().commit();
             return place;
