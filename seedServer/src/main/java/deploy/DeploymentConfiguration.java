@@ -85,7 +85,20 @@ public class DeploymentConfiguration implements ServletContextListener {
                     place.setImageUrl("http://financeblvd.com/wp-content/uploads/2017/08/wallstreetfeature.jpg");
                     em.persist(place);
                     em.getTransaction().commit();
-                    System.out.println("Created Places");
+                   
+                }
+                if (em.find(Place.class, 1) == null) {
+                    em.getTransaction().begin();
+                    Place place1 = new Place();
+                    place1.setAddress("Kjeldsgårdsvej 27C, 3th.");
+                    place1.setCity("Copenhagen");
+                    place1.setDescription("Beauty of Denmark");
+                    place1.setRating(5);
+                    place1.setZip("2500");
+                    place1.setImageUrl("http://rejsebox.dk/wp-content/uploads/2016/08/rejsebox-34673457_l-2015.jpg");
+                    em.persist(place1);
+                    em.getTransaction().commit();
+                    
                 }
             } catch (Exception ex) {
                 Logger.getLogger(UserFacade.class.getName()).log(Level.SEVERE, null, ex);
