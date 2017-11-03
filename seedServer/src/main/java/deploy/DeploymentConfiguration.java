@@ -3,6 +3,7 @@ package deploy;
 import entity.Place;
 import entity.Role;
 import entity.User;
+import facades.PlaceFacade;
 import facades.UserFacade;
 import rest.PlaceResource;
 import security.Secret;
@@ -44,7 +45,7 @@ public class DeploymentConfiguration implements ServletContextListener {
             prop.load(input);
             Secret.SHARED_SECRET = prop.getProperty("tokenSecret").getBytes();
             PlaceResource.FILE_LOCATION = prop.getProperty("fileLocation");
-            Place.BASE_IMAGE_URL = prop.getProperty("baseImageUrl");
+            PlaceFacade.BASE_IMAGE_URL = prop.getProperty("baseImageUrl");
             input.close();
 
         } catch (IOException ex) {

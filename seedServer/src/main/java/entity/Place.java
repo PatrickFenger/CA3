@@ -11,7 +11,6 @@ import javax.validation.constraints.NotNull;
  */
 @Entity
 public class Place {
-    public static String BASE_IMAGE_URL;
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -82,7 +81,7 @@ public class Place {
     }
 
     public String getImageUrl() {
-        return BASE_IMAGE_URL+imageUrl;
+        return imageUrl;
     }
 
     public void setImageUrl(String imageUrl) {

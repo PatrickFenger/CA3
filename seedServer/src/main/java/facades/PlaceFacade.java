@@ -11,6 +11,7 @@ import java.util.List;
  */
 public class PlaceFacade {
     EntityManagerFactory emf;
+    public static String BASE_IMAGE_URL;
 
     public PlaceFacade(EntityManagerFactory emf) {
         this.emf = emf;
@@ -42,7 +43,7 @@ public class PlaceFacade {
             place.setCity(city);
             place.setZip(zip);
             place.setDescription(desctiption);
-            place.setImageUrl(image);
+            place.setImageUrl(BASE_IMAGE_URL+image);
             em.persist(place);
             em.getTransaction().commit();
             return place;
