@@ -5,18 +5,34 @@ export default class Places extends React.Component {
         super(props);
         this.state = {
             places: [],
-            initialPLaces: []
+            initialPlaces: []
         }
     }
+
+    filterList = (event) => {
+        var updatedList = this.state.initialPlaces;
+        var value = event.target.value.toLowerCase();
+        updatedList = updatedList.filter(function (place) {
+            return place.city.toLowerCase().search(value) !== -1 
+            || place.description.toLowerCase().search(value) !== -1
+            || place.zip.toLowerCase().search(value) !== -1
+        });
+        this.setState({ places: updatedList })
+    }
+
     componentDidMount() {
         fetch(serverURL + "api/places")
             .then(res => {
                 return res.json();
             })
             .then(places => {
-                this.setState({ places, initialPLaces: places })
-                console.log("places", places)
+                this.setState({
+                    places: places,
+                    initialPlaces: places
+                });
+
             })
+
     }
     
     filterList = (event) => {
@@ -35,16 +51,12 @@ export default class Places extends React.Component {
         
         return (
             <div className="container">
-                <h2>Places</h2>
                 <div>
-                    <input
-                        type="text"
-                        placeholder="Search"
-                        onChange={this.filterList}
-                    />
+                    <input type="text" placeholder="search" onChange={this.filterList} />
+
+
                 </div>
-                {console.log("query", this.state.query)}
-                <div id="list" className="row">
+                <div className="row">
                     {
                         places.map((place) => {
                             return (

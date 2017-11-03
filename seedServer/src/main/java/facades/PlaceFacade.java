@@ -22,12 +22,12 @@ public class PlaceFacade {
 
     public List<Place> getAllPlaces() {
         EntityManager em = getEntityManager();
-        List<Place> places;
+        List<Place> Places;
         try {
             em.getTransaction().begin();
-            places = em.createQuery("SELECT u FROM Place u").getResultList();
+            Places = em.createQuery("SELECT u FROM Place u").getResultList();
             em.getTransaction().commit();
-            return places;
+            return Places;
         } finally {
             em.close();
         }
