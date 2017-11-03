@@ -70,4 +70,7 @@ public class User implements IUser, Serializable {
         return rolesAsStrings;
     }
 
+    public void setRoles(List<Role> roles) {
+        this.roles = roles;
+    }
 }

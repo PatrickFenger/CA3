@@ -11,6 +11,7 @@ import java.util.List;
  */
 public class PlaceFacade {
     EntityManagerFactory emf;
+    public static String BASE_IMAGE_URL;
 
     public PlaceFacade(EntityManagerFactory emf) {
         this.emf = emf;
@@ -22,13 +23,32 @@ public class PlaceFacade {
 
     public List<Place> getAllPlaces() {
         EntityManager em = getEntityManager();
-        List<Place> places;
+        List<Place> Places;
         try {
             em.getTransaction().begin();
-            places = em.createQuery("SELECT u FROM Place u").getResultList();
+            Places = em.createQuery("SELECT u FROM Place u").getResultList();
             em.getTransaction().commit();
-            return places;
+            return Places;
         } finally {
+            em.close();
+        }
+    }
+
+    public Place addPlace(String address, String city, String zip, String desctiption, String image) {
+        EntityManager em = getEntityManager();
+        try {
+            em.getTransaction().begin();
+            Place place = new Place();
+            place.setAddress(address);
+            place.setCity(city);
+            place.setZip(zip);
+            place.setDescription(desctiption);
+            place.setImageUrl(BASE_IMAGE_URL+image);
+            em.persist(place);
+            em.getTransaction().commit();
+            return place;
+        }
+        finally {
             em.close();
         }
     }

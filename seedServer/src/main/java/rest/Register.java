@@ -35,7 +35,9 @@ public class Register {
         
         IUserFacade facade = UserFacadeFactory.getInstance();
         facade.registerUser(username, password);
-        return gson.toJson(username);
+        json = new JsonObject();
+        json.addProperty("username", username);
+        return json.toString();
         
 
     }
