@@ -34,8 +34,13 @@ class AdminPage extends Component {
 
   onChange = (e, index) => {
     const propertyName = e.target.name;
-    const value = e.target.value;
-    let users = this.state.users
+    let value;
+    if(propertyName !== "USER_ROLE")
+      value = e.target.value;
+    else
+      value = e.target.value.split();
+    const finalValue = value;
+    let users = this.state.users;
     users[index][propertyName] = value;
     this.setState({ users });
   }
@@ -84,7 +89,7 @@ class AdminPage extends Component {
                   return (
                     <tr key={index}>
                       <td >
-                      <input name="USER_NAME" value={user.USER_NAME} onChange={(e) => this.onChange(e, index)} className="form-control"  placeholder={user.USER_NAME} />
+                      {user.USER_NAME}
                       </td>
                       <td >
                       <input name="USER_ROLE" value={user.USER_ROLE} onChange={(e) => this.onChange(e, index)} className="form-control"  placeholder={user.USER_ROLE} />
