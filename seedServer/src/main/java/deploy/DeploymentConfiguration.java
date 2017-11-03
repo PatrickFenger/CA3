@@ -44,6 +44,7 @@ public class DeploymentConfiguration implements ServletContextListener {
             prop.load(input);
             Secret.SHARED_SECRET = prop.getProperty("tokenSecret").getBytes();
             PlaceResource.FILE_LOCATION = prop.getProperty("fileLocation");
+            Place.BASE_IMAGE_URL = prop.getProperty("baseImageUrl");
             input.close();
 
         } catch (IOException ex) {
