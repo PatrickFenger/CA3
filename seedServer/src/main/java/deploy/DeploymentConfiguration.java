@@ -4,6 +4,7 @@ import entity.Place;
 import entity.Role;
 import entity.User;
 import facades.UserFacade;
+import rest.PlaceResource;
 import security.Secret;
 
 import javax.persistence.EntityManager;
@@ -42,6 +43,7 @@ public class DeploymentConfiguration implements ServletContextListener {
             }
             prop.load(input);
             Secret.SHARED_SECRET = prop.getProperty("tokenSecret").getBytes();
+            PlaceResource.FILE_LOCATION = prop.getProperty("fileLocation");
             input.close();
 
         } catch (IOException ex) {

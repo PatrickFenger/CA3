@@ -19,3 +19,4 @@ derby.log
 nb-configuration.xml
 .idea/
 seedMaven.iml
+/src/main/resources/config.properties

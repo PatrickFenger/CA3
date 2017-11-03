@@ -19,7 +19,7 @@ import java.io.*;
 public class PlaceResource {
     Gson gson;
     PlaceFacade facade;
-    private static final String FILE_LOCATION = "/Users/adam/img/";
+    public static String FILE_LOCATION;
 
     public PlaceResource() {
         this.gson = new Gson();
