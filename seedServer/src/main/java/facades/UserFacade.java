@@ -50,27 +50,36 @@ public class UserFacade implements IUserFacade {
     @Override
     public User deleteUser(String id) {
         EntityManager em = getEntityManager();
-        User user = em.find(User.class, id);
-        if (user == null) {
-            throw new EntityNotFoundException("UserResource " + id + " not found!");
+        try {
+            User user = em.find(User.class, id);
+            if (user == null) {
+                throw new EntityNotFoundException("UserResource " + id + " not found!");
+            }
+            em.getTransaction().begin();
+            em.remove(user);
+            em.getTransaction().commit();
+            return user;
+        } finally {
+            em.close();
         }
-        em.getTransaction().begin();
-        em.remove(user);
-        em.getTransaction().commit();
-        return user;
     }
 
     @Override
-    public User editUser(User user) {
+    public User editUserRoles(List<Role> roles, String username) {
         EntityManager em = getEntityManager();
-        User editUser = em.find(User.class, user.getUserName());
-        if (editUser == null) {
-            throw new EntityNotFoundException("UserResource " + user.getUserName() + " not found!");
+        try {
+            User editUser = em.find(User.class, username);
+            if (editUser == null) {
+                throw new EntityNotFoundException("UserResource " + username + " not found!");
+            }
+            editUser.setRoles(roles);
+            em.getTransaction().begin();
+            em.merge(editUser);
+            em.getTransaction().commit();
+            return editUser;
+        } finally {
+            em.close();
         }
-        em.getTransaction().begin();
-        em.merge(user);
-        em.getTransaction().commit();
-        return user;
     }
 
 
