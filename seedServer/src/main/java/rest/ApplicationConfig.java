@@ -1,8 +1,8 @@
 package rest;
 
+import org.glassfish.jersey.media.multipart.MultiPartFeature;
+
 import javax.ws.rs.core.Application;
-import java.util.HashMap;
-import java.util.Map;
 import java.util.Set;
 
 
@@ -23,6 +23,7 @@ public class ApplicationConfig extends Application {
      * If required, comment out calling this method in getClasses().
      */
     private void addRestResourceClasses(Set<Class<?>> resources) {
+        resources.add(MultiPartFeature.class);
         resources.add(cors.CorsRequestFilter.class);
         resources.add(cors.CorsResponseFilter.class);
         resources.add(httpErrors.GenericExceptionMapper.class);
@@ -36,13 +37,6 @@ public class ApplicationConfig extends Application {
         resources.add(security.Login.class);
         resources.add(security.NotAuthorizedExceptionMapper.class);
         resources.add(security.RolesAllowedFilter.class);
-    }
-
-    @Override
-    public Map<String, Object> getProperties() {
-        Map<String, Object> props = new HashMap<>();
-        props.put("jersey.config.server.provider.classnames", "org.glassfish.jersey.media.multipart.MultiPartFeature");
-        return props;
     }
 
 }
