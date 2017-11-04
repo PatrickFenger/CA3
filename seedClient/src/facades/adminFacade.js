@@ -52,15 +52,14 @@ class AdminStore {
 
   editUser = (cb,user) => {
     console.log(user.USER_ROLE)
-    let data = {
-      roles: user.USER_ROLE.map( (role) => { return {roleName:role} } )
-    };
+    let data = user.USER_ROLE.map( (role) => { return {roleName:role} } )
+
     console.log(data);
     this._errorMessage = "";
     this._messageFromServer = "";
     let resFromFirstPromise=null;  //Pass on response the "second" promise so we can read errors from server
     const options = fetchHelper.makeOptions("PUT", true, data);
-    fetch(URL + "api/users/roles/" + user.USER_NAME, options)
+    fetch(URL + "api/users/" + user.USER_NAME + "/roles" , options)
       .then((res) => {
         resFromFirstPromise = res; 
         return res.json();
