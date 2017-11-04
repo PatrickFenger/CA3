@@ -50,33 +50,37 @@ class AdminStore {
       })
   }
 
-  // editUser = (cb) => {
-  //   this._errorMessage = "";
-  //   this._messageFromServer = "";
-  //   let resFromFirstPromise=null;  //Pass on response the "second" promise so we can read errors from server
-  //   const options = fetchHelper.makeOptions("PUT", true, data);
-  //   fetch(URL + "api/demoadmin/users", options)
-  //     .then((res) => {
-  //       resFromFirstPromise = res; 
-  //       return res.json();
-  //     }).then((data) => {
-  //       errorChecker(resFromFirstPromise,data);
-  //       if (cb) {
-  //         cb(null, data.users)
-  //       }
-  //     }).catch(err => {
-  //       if (cb) {
-  //         cb({ err: fetchHelper.addJustErrorMessage(err) })
-  //       }
-  //     })
-  // }
+  editUser = (cb,user) => {
+    console.log(user.USER_ROLE)
+    let data = user.USER_ROLE.map( (role) => { return {roleName:role} } )
+
+    console.log(data);
+    this._errorMessage = "";
+    this._messageFromServer = "";
+    let resFromFirstPromise=null;  //Pass on response the "second" promise so we can read errors from server
+    const options = fetchHelper.makeOptions("PUT", true, data);
+    fetch(URL + "api/users/" + user.USER_NAME + "/roles" , options)
+      .then((res) => {
+        resFromFirstPromise = res; 
+        return res.json();
+      }).then((data) => {
+        errorChecker(resFromFirstPromise,data);
+        if (cb) {
+          cb(null, data.users)
+        }
+      }).catch(err => {
+        if (cb) {
+          cb({ err: fetchHelper.addJustErrorMessage(err) })
+        }
+      })
+  }
 
   deleteUser = (cb, username) => {
     this._errorMessage = "";
     this._messageFromServer = "";
     let resFromFirstPromise=null;  //Pass on response the "second" promise so we can read errors from server
     const options = fetchHelper.makeOptions("DELETE", true);
-    fetch(URL + "api/user/" + username, options)
+    fetch(URL + "api/users/" + username, options)
       .then((res) => {
         resFromFirstPromise = res;
         return res.json();

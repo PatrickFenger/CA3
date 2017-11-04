@@ -13,8 +13,13 @@ class AdminPage extends Component {
     }
   }
 
-  onEdit = (username) => {
-    return 0;
+  onEdit = (user) => {
+    adminData.editUser((e) => {
+      if (e) {
+        return this.setState({ errData: e.err })
+      }
+      this.setState({ errData: ""});
+    },user);
   }
 
   onDelete = (username) => {
@@ -25,6 +30,19 @@ class AdminPage extends Component {
       let users = this.state.users.filter((user) => user.USER_NAME !== username)
       this.setState({ errData: "", users });
     },username);
+  }
+
+  onChange = (e, index) => {
+    const propertyName = e.target.name;
+    let value;
+    if(propertyName !== "USER_ROLE")
+      value = e.target.value;
+    else
+      value = e.target.value.split(",");
+    const finalValue = value;
+    let users = this.state.users;
+    users[index][propertyName] = value;
+    this.setState({ users });
   }
 
   componentWillMount() {
@@ -70,9 +88,13 @@ class AdminPage extends Component {
                 {this.state.users.map((user, index) => {
                   return (
                     <tr key={index}>
-                      <td >{user.USER_NAME} </td>
-                      <td >{user.USER_ROLE} </td>
-                      <td ><button className="btn btn-lg btn-black btn-block" onClick={() => this.onEdit(user.USER_NAME)}>EDIT</button> </td>
+                      <td >
+                      {user.USER_NAME}
+                      </td>
+                      <td >
+                      <input name="USER_ROLE" value={user.USER_ROLE} onChange={(e) => this.onChange(e, index)} className="form-control"  placeholder={user.USER_ROLE} />
+                      </td>
+                      <td ><button className="btn btn-lg btn-black btn-block" onClick={() => this.onEdit(user)}>EDIT</button> </td>
                       <td ><button className="btn btn-lg btn-black btn-block" onClick={() => this.onDelete(user.USER_NAME)}>DELETE</button></td>
                     </tr>
                   )

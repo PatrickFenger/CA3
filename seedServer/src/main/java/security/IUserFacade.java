@@ -1,5 +1,6 @@
 package security;
 
+import entity.Role;
 import entity.User;
 
 import java.util.List;
@@ -17,7 +18,7 @@ public interface IUserFacade {
     User getUserByUserId(String id);
     List<User> getUsers();
     User deleteUser(String id);
-    User editUser(User user);
+    User editUserRoles(List<Role> roles, String username);
 
     
     void registerUser(String username, String password) throws PasswordStorage.CannotPerformOperationException;

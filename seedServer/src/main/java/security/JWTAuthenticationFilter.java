@@ -55,7 +55,7 @@ public class JWTAuthenticationFilter implements ContainerRequestFilter {
         String username = getUsernameFromToken(token);
         final UserPrincipal user = getPricipalByUserId(username);
         if (user == null) {
-          throw new NotAuthorizedException("User could not be authenticated via the provided token", Response.Status.FORBIDDEN);
+          throw new NotAuthorizedException("UserResource could not be authenticated via the provided token", Response.Status.FORBIDDEN);
         }
 
         request.setSecurityContext(new SecurityContext() {

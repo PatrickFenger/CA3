@@ -92,7 +92,7 @@ public class InitialSeedRestIntegrationTest {
             .when()
             .get("/api/demouser").then()
             .statusCode(200)
-            .body("message", equalTo("Hello User from Server (Accesible by only authenticated USERS)"));
+            .body("message", equalTo("Hello UserResource from Server (Accesible by only authenticated USERS)"));
   }
   
   @Test

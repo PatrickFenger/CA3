@@ -61,7 +61,7 @@ public class DeploymentConfiguration implements ServletContextListener {
                 System.out.println("Creating TEST Users");
                 if (em.find(User.class, "user") == null) {
                     em.getTransaction().begin();
-                    Role userRole = new Role("User");
+                    Role userRole = new Role("UserResource");
                     Role adminRole = new Role("Admin");
                     User user = new User("user", "test");
                     user.addRole(userRole);
