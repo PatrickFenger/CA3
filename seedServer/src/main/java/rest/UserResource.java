@@ -8,6 +8,7 @@ import rest.utilities.ExclusionGsonBuilder;
 import security.IUserFacade;
 import security.UserFacadeFactory;
 
+import javax.annotation.security.RolesAllowed;
 import javax.persistence.EntityNotFoundException;
 import javax.ws.rs.*;
 import javax.ws.rs.core.MediaType;
@@ -15,6 +16,7 @@ import javax.ws.rs.core.Response;
 import java.util.Arrays;
 import java.util.List;
 
+@RolesAllowed("Admin")
 @Path("users")
 public class UserResource {
     Gson gson;

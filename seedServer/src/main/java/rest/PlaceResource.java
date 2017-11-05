@@ -7,6 +7,7 @@ import facades.PlaceFacadeFactory;
 import org.glassfish.jersey.media.multipart.FormDataContentDisposition;
 import org.glassfish.jersey.media.multipart.FormDataParam;
 
+import javax.annotation.security.RolesAllowed;
 import javax.ws.rs.*;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
@@ -32,6 +33,7 @@ public class PlaceResource {
         return gson.toJson(facade.getAllPlaces());
     }
 
+    @RolesAllowed({"User","Admin"})
     @Path("add")
     @POST
     @Consumes(MediaType.MULTIPART_FORM_DATA)
