@@ -32,7 +32,7 @@ public class ApplicationConfig extends Application {
         resources.add(rest.All.class);
         resources.add(rest.PlaceResource.class);
         resources.add(rest.Register.class);
-        resources.add(UserResource.class);
+        resources.add(rest.UserResource.class);
         resources.add(security.JWTAuthenticationFilter.class);
         resources.add(security.Login.class);
         resources.add(security.NotAuthorizedExceptionMapper.class);
