@@ -135,7 +135,13 @@ class Add extends React.Component {
             formData.append(key, this.state[key]);
         }
 
-        fetch(serverURL + "api/places/add", { method: "POST", body: formData })
+        fetch(serverURL + "api/places/add", {
+            method: "POST",
+            headers: {
+                Authorization: `Bearer ${sessionStorage.token}`
+            },
+            body: formData
+        })
             .then(res => {
                 return res.json();
             })
